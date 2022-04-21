@@ -45,6 +45,7 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 async function create_window() {
+    if (require('electron-squirrel-startup')) return app.quit();
     mainWindow = new BrowserWindow({
         show: false,
         webPreferences: {
