@@ -1,0 +1,94 @@
+{
+  "name": "start-desk",
+  "version": "1.1.0",
+  "private": true,
+  "main": "build/main/index.js",
+  "scripts": {
+    "dev:clean": "rm -rf build/*",
+    "dev:next": "next dev",
+    "dev:parcel": "parcel watch",
+    "dev": "run-p dev:*",
+    "start": "electron-forge start",
+    "lint": "next lint",
+    "make:next": "next build && next export -o build",
+    "make:parcel": "parcel build --no-source-maps",
+    "make:obfuscator": "javascript-obfuscator --config javascript-obfuscator.js build -o build",
+    "make:electron": "electron-forge make",
+    "make": "run-s make:*"
+  },
+  "targets": {
+    "electron-main": {
+      "source": "electron/main/index.ts",
+      "distDir": "build/main",
+      "engines": {
+        "node": "^16.13.1"
+      }
+    },
+    "electron-renderer": {
+      "source": "electron/renderer/index.ts",
+      "distDir": "build/renderer",
+      "engines": {
+        "node": "^16.13.1"
+      }
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0",
+    "electron-serve": "^1.1.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "next": "12.1.5",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@types/node": "17.0.25",
+    "@types/react": "18.0.5",
+    "@types/react-dom": "18.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "18.0.4",
+    "eslint": "8.13.0",
+    "eslint-config-next": "12.1.5",
+    "javascript-obfuscator": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "parcel": "^2.4.1",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "sass": "^1.50.1",
+    "typescript": "4.6.3",
+    "util": "^0.12.4"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "public/favicon"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "ele_next"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
